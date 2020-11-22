@@ -15,7 +15,7 @@ if [ -z "$last" ]
 then
     cat ./temp/all_commits.txt | tac > ./temp/new_commits.txt
 else
-    cat ./temp/all_commits.txt | sed "/$last/Q0" | tac > ./temp/new_commits.txt
+    cat ./temp/all_commits.txt | sed -n "/$last/q;p" | tac > ./temp/new_commits.txt
 fi
 
 echo "obtaning changes"

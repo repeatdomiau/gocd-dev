@@ -15,7 +15,7 @@ if [ -z "$last" ]
 then
     cat ./temp/all_commits.txt | tac > ./temp/new_commits.txt
 else
-    cat ./temp/all_commits.txt | sed "/$last/Q" | tac > ./temp/new_commits.txt
+    cat ./temp/all_commits.txt | sed "/$last/Q0" | tac > ./temp/new_commits.txt
 fi
 
 echo "obtaning changes"
@@ -34,19 +34,17 @@ done < ./temp/new_commits.txt
 
 cat ./temp/changes.txt | grep '^COMMIT\|.json$' > changed-json-files.txt
 
-rm -r ./temp/
-
 echo "ALL COMMITS_-------------------------------------------------------------"
-cat all_commits.txt
+cat ./temp/all_commits.txt
 echo "NEW COMMITS--------------------------------------------------------------"
-cat new_commits.txt
+cat ./temp/new_commits.txt
 echo "CHANGES-------------------------------------------------------------------"
-cat changes.txt
+cat ./temp/changes.txt
 echo "CHANGES-JSON--------------------------------------------------------------"
 cat changed-json-files.txt
 echo "-------------------------------------------------------------------------"
 
-
+rm -r ./temp/
 
 #npm i --silent
 #node process.js json_files_changed.txt

@@ -1,40 +1,40 @@
 #!/bin/bash
+echo "starting..."
+
+mkdir ./temp/
+
 echo "obtaining commits"
-git rev-list --remotes > all_commits.txt
+git rev-list --remotes > ./temp/all_commits.txt
+
 echo "filtering commits"
 last=$(cat last-commit.txt)
-if [ -z $last ]
-then
-    cat all_commits.txt | tac > new_commits.txt
-else
-    echo "last commit: $last"
-    cat all_commits.txt | sed "/$last/Q" | tac > new_commits.txt
-fi
 
-echo "new commits:"
-cat new_commits.txt
+echo $last
+
+if [ -z "$last" ]
+then
+    cat ./temp/all_commits.txt | tac > ./temp/new_commits.txt
+else
+    cat ./temp/all_commits.txt | sed "/$last/Q" | tac > ./temp/new_commits.txt
+fi
 
 echo "obtaning changes"
 
-truncate -s 0 changes.txt
+truncate -s 0 ./temp/changes.txt
 
 while read -r line; do
     echo "fetching "$line
-    echo "COMMIT "$line >> changes.txt
-    git diff-tree --no-commit-id --name-only --diff-filter=A -r $line | sed 's/^/ADDED /' >> changes.txt
-    git diff-tree --no-commit-id --name-only --diff-filter=M -r $line | sed 's/^/MODIFIED /'>> changes.txt
-    git diff-tree --no-commit-id --name-only --diff-filter=D -r $line | sed 's/^/DELETED /'>> changes.txt
-    printf "\n" >> changes.txt
+    echo "COMMIT "$line >> ./temp/changes.txt
+    git diff-tree --no-commit-id --name-only --diff-filter=A -r $line | sed 's/^/ADDED /' >> ./temp/changes.txt
+    git diff-tree --no-commit-id --name-only --diff-filter=M -r $line | sed 's/^/MODIFIED /'>> ./temp/changes.txt
+    git diff-tree --no-commit-id --name-only --diff-filter=D -r $line | sed 's/^/DELETED /'>> ./temp/changes.txt
+    printf "\n" >> ./temp/changes.txt
     
-done < new_commits.txt
+done < ./temp/new_commits.txt
 
-cat changes.txt | grep .*.json$ > json_files_changed.txt
+cat ./temp/changes.txt | grep '^COMMIT\|.json$' > changed_json_files.txt
 
-echo "global changes"
-cat changes.txt
-
-echo "changes on json files"
-cat json_files_changed.txt
+rm -r ./temp/
 
 #npm i --silent
 #node process.js json_files_changed.txt

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cruise xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="cruise-config.xsd" schemaVersion="138">
+  <server agentAutoRegisterKey="9a63e07e-e5ad-4723-bb28-c27f7c493345" webhookSecret="36eea09a-a896-4358-b847-01a7d25ce197" commandRepositoryLocation="default" serverId="3a8f5955-df5a-4c0f-95b7-8791a1dcb78d" tokenGenerationKey="33e9a668-593a-4af5-8ab4-de33aa1d46ed">
+    <backup emailOnSuccess="true" emailOnFailure="true" />
+    <artifacts>
+      <artifactsDir>artifacts</artifactsDir>
+    </artifacts>
+  </server>
+  <pipelines group="defaultGroup">
+    <pipeline name="pipe-1" lockBehavior="unlockWhenFinished">
+      <materials>
+        <git url="https://github.com/repeatdomiau/gocd-dev.git" branch="main" />
+      </materials>
+      <stage name="stage-1">
+        <jobs>
+          <job name="job-1">
+            <tasks>
+              <exec command="./diff2.sh" workingdir="cd-scripts">
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="cd-scripts">
+                <arg>-c</arg>
+                <arg>ls -l</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+            <tabs>
+              <tab name="json-diff" path="changed-json-files.txt" />
+            </tabs>
+            <artifacts>
+              <artifact type="build" src="cd-scripts/changed-json-files.txt" />
+            </artifacts>
+          </job>
+        </jobs>
+      </stage>
+      <stage name="stage-2">
+        <approval type="success" allowOnlyOnSuccess="true" />
+        <environmentvariables>
+          <variable name="MONGODB_HOST_NAME">
+            <value>mongodb</value>
+          </variable>
+          <variable name="MONGODB_USER">
+            <value>root</value>
+          </variable>
+          <variable name="MONGODB_PASSWORD">
+            <value>102030</value>
+          </variable>
+          <variable name="MONGODB_DATABASE">
+            <value>exercicios</value>
+          </variable>
+          <variable name="MONGODB_PORT">
+            <value>27017</value>
+          </variable>
+        </environmentvariables>
+        <jobs>
+          <job name="job-1">
+            <tasks>
+              <fetchartifact artifactOrigin="gocd" srcfile="changed-json-files.txt" dest="cd-scripts/node-scripts/" pipeline="pipe-1" stage="stage-1" job="job-1">
+                <runif status="passed" />
+              </fetchartifact>
+              <exec command="/bin/bash" workingdir="cd-scripts/node-scripts">
+                <arg>-c</arg>
+                <arg>ls -l</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="cd-scripts/node-scripts">
+                <arg>-c</arg>
+                <arg>npm install</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="cd-scripts/node-scripts">
+                <arg>-c</arg>
+                <arg>ls -l</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="cd-scripts/node-scripts">
+                <arg>-c</arg>
+                <arg>node check-connection.js</arg>
+                <runif status="passed" />
+              </exec>
+              <exec command="/bin/bash" workingdir="cd-scripts/node-scripts">
+                <arg>-c</arg>
+                <arg>node consolidate-db-from-repo.js changed-json-files.txt</arg>
+                <runif status="passed" />
+              </exec>
+            </tasks>
+          </job>
+        </jobs>
+      </stage>
+    </pipeline>
+  </pipelines>
+</cruise>

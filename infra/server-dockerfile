@@ -1,0 +1,9 @@
+FROM gocd/gocd-server:v20.9.0
+
+USER root
+
+RUN apk update && apk add git
+
+USER go
+
+# ENTRYPOINT ["/docker-entrypoint.sh"]

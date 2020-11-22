@@ -1,0 +1,12 @@
+FROM gocd/gocd-agent-alpine-3.12:v20.9.0
+
+USER root
+
+RUN apk --update add git
+
+RUN apk --update add nodejs npm
+
+RUN npm i yarn -g
+
+USER go
+

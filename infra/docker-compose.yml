@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+  gocdserver:
+    build: 
+      context: "./"
+      dockerfile: "server-dockerfile"
+    restart: unless-stopped
+    container_name: gocd-server
+    ports: 
+      - "8153:8153"
+    networks:
+      - gocdnetwork 
+    volumes:
+      - "gocddata:/godata"
+
+
+  gocdagent:
+    build:
+      context: "./"
+      dockerfile: "agent-dockerfile"
+    restart: unless-stopped
+    environment: 
+      - GO_SERVER_URL=http://gocdserver:8153/go
+      - AGENT_AUTO_REGISTER_KEY=9a63e07e-e5ad-4723-bb28-c27f7c493345
+      - MONGODB_HOST_NAME=mongodb
+      - MONGODB_USER=root
+      - MONGODB_PASSWORD=102030
+      - MONGODB_DATABASE=exercicios
+    depends_on:
+      - gocdserver
+      - mongodb
+    networks:
+      - gocdnetwork
+    deploy:
+      mode: replicated
+      replicas: 2
+  
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 102030
+    ports:
+      - 27017:27017
+    networks:
+      - gocdnetwork
+
+networks:
+  gocdnetwork:
+
+volumes:
+  gocddata:

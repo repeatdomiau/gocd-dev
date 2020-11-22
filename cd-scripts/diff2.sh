@@ -32,7 +32,7 @@ while read -r line; do
     
 done < ./temp/new_commits.txt
 
-cat ./temp/changes.txt | grep '^COMMIT\|.json$' > changed_json_files.txt
+cat ./temp/changes.txt | grep '^COMMIT\|.json$' > changed-json-files.txt
 
 rm -r ./temp/
 

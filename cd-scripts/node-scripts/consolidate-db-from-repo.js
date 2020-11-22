@@ -2,6 +2,7 @@ const fs = require('fs');
 require('dotenv').config();
 const mongoose = require('mongoose');
 
+const compose = (...fns) => (...args) => fns.reduce((res, fn) => [fn.call(null, ...res)], args)[0];
 const trace = x => { console.log(x); return x; }
 const toString = obj => obj.toString();
 const split = sep => text => text.split(sep);
@@ -18,20 +19,17 @@ const db_pass = process.env.MONGODB_PASSWORD;
 const db_base = process.env.MONGODB_DATABASE;
 const db_port = process.env.MONGODB_PORT;
 
-const run = async () => {
-    const changesFile = process.argv[2];
+const changesFile = process.argv[2];
 
+const app = compose(toString, splitLines, filter(byTruthy), trace);
+
+try {
     if (changesFile) {
-        await require('fs')
-            .promises
-            .readFile(changesFile)
-            .then(toString)
-            .then(splitLines)
-            .then(filter(byTruthy))
-            .then(trace)
-            .catch(console.error);
+        const content = require('fs').readFileSync(changesFile);
+        app(content);
     }
-
 }
-
-run();
+catch (err) {
+    console.log(err);
+    throw 'failed';
+}

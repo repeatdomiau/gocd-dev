@@ -1,24 +1,22 @@
 #!/bin/bash
-echo "starting..."
+echo -e "starting...\n"
 
 mkdir ./temp/
 
-echo "obtaining commits..."
+echo -e "obtaining commits...\n"
 git rev-list --remotes > ./temp/all_commits.txt
 
-echo "filtering commits..."
 last=$(cat last-commit.txt)
-
-echo $last
 
 if [ -z "$last" ]
 then
     cat ./temp/all_commits.txt | tac > ./temp/new_commits.txt
 else
+    echo -e "filtering commits older than $last\n"
     cat ./temp/all_commits.txt | sed -n "/$last/q;p" | tac > ./temp/new_commits.txt
 fi
 
-echo "obtaning changes..."
+echo -e "obtaning changes...\n"
 
 truncate -s 0 ./temp/changes.txt
 
@@ -32,9 +30,13 @@ while read -r line; do
     
 done < ./temp/new_commits.txt
 
-echo "filtering changes..."
+echo ""
+
+echo -e "filtering changes...\n"
 
 cat ./temp/changes.txt | grep '^COMMIT\|exercicios.*.json$' > changed-json-files.txt
+
+echo -e "result:\n"
 
 cat changed-json-files.txt
 

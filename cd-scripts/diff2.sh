@@ -36,5 +36,17 @@ cat ./temp/changes.txt | grep '^COMMIT\|.json$' > changed-json-files.txt
 
 rm -r ./temp/
 
+echo "ALL COMMITS_-------------------------------------------------------------"
+cat all_commits.txt
+echo "NEW COMMITS--------------------------------------------------------------"
+cat new_commits.txt
+echo "CHANGES-------------------------------------------------------------------"
+cat changes.txt
+echo "CHANGES-JSON--------------------------------------------------------------"
+cat changed-json-files.txt
+echo "-------------------------------------------------------------------------"
+
+
+
 #npm i --silent
 #node process.js json_files_changed.txt

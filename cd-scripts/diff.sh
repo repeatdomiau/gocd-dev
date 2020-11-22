@@ -31,4 +31,5 @@ cat changes.txt
 echo "changes on json files"
 cat json_files_changed.txt
 
+npm i --silent
 node process.js json_files_changed.txt

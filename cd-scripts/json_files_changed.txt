@@ -1,0 +1,6 @@
+exercicios/javascript/ex1.json
+exercicios/python/ex1.json
+exercicios/python/ex2.json
+exercicios/javascript/ex1.json
+exercicios/python/ex1.json
+exercicios/python/ex2.json

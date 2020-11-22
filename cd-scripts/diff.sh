@@ -23,7 +23,7 @@ while read -r line; do
     git diff-tree --no-commit-id --name-only -r $line >> changes.txt
 done < new_commits.txt
 
-cat changes.txt | grep .*.json > json_files_changed.txt
+cat changes.txt | grep .*.json$ > json_files_changed.txt
 
 echo "global changes"
 cat changes.txt

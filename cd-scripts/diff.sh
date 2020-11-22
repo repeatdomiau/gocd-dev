@@ -23,3 +23,5 @@ while read -r line; do
 done < new_commits.txt
 
 cat changes.txt
+
+node index.js changes.txt

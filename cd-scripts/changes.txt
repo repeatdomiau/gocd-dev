@@ -1,1 +1,7 @@
+cd-scripts/all_commits.txt
+cd-scripts/changes.txt
+cd-scripts/diff.sh
+cd-scripts/last-commit.txt
+cd-scripts/new_commits.txt
+hello.js
 README.md

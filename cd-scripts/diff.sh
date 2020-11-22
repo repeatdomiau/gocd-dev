@@ -19,10 +19,16 @@ echo "obtaning changes"
 truncate -s 0 changes.txt
 
 while read -r line; do
+    echo "fetching "$line
     git diff-tree --no-commit-id --name-only -r $line >> changes.txt
 done < new_commits.txt
 
 cat changes.txt | grep .*.json > json_files_changed.txt
 
+echo "global changes"
+cat changes.txt
+
+echo "changes on json files"
+cat json_files_changed.txt
 
 node process.js json_files_changed.txt

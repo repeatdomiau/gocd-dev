@@ -12,6 +12,7 @@ services:
       - gocdnetwork 
     volumes:
       - "gocddata:/godata"
+      - "./cruise-config.xml:/godata/config/cruise-config.xml"
 
 
   gocdagent:

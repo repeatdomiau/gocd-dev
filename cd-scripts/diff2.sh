@@ -3,10 +3,10 @@ echo "starting..."
 
 mkdir ./temp/
 
-echo "obtaining commits"
+echo "obtaining commits..."
 git rev-list --remotes > ./temp/all_commits.txt
 
-echo "filtering commits"
+echo "filtering commits..."
 last=$(cat last-commit.txt)
 
 echo $last
@@ -18,7 +18,7 @@ else
     cat ./temp/all_commits.txt | sed -n "/$last/q;p" | tac > ./temp/new_commits.txt
 fi
 
-echo "obtaning changes"
+echo "obtaning changes..."
 
 truncate -s 0 ./temp/changes.txt
 
@@ -32,19 +32,10 @@ while read -r line; do
     
 done < ./temp/new_commits.txt
 
-cat ./temp/changes.txt | grep '^COMMIT\|.json$' > changed-json-files.txt
+echo "filtering changes..."
 
-echo "ALL COMMITS_------------------------------------------------------------"
-cat ./temp/all_commits.txt
-echo "NEW COMMITS-------------------------------------------------------------"
-cat ./temp/new_commits.txt
-echo "CHANGES-----------------------------------------------------------------"
-cat ./temp/changes.txt
-echo "CHANGES-JSON------------------------------------------------------------"
+cat ./temp/changes.txt | grep '^COMMIT\|exercicios.*.json$' > changed-json-files.txt
+
 cat changed-json-files.txt
-echo "------------------------------------------------------------------------"
 
 rm -r ./temp/
-
-#npm i --silent
-#node process.js json_files_changed.txt

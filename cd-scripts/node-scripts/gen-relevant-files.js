@@ -11,8 +11,10 @@ const byTruthy = x => x;
 const arrayToSet = arr => new Set(arr);
 const setToArray = set => [...set];
 
+const changesFile = process.argv[2];
+
 const readLines = compose(fs.readFileSync, toString, splitLines);
-const changes = readLines('../changed-json-files.txt');
+const changes = readLines(changesFile);
 const relevantLines = changes.filter(x => !x.startsWith('COMMIT') && x);
 
 const relevantFiles = [...relevantLines.reduce((res, line) => {

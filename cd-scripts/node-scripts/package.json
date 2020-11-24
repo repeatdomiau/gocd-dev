@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^6.12.6",
     "dotenv": "^8.2.0",
-    "mongoose": "^5.10.15"
+    "mongoose": "^5.10.15",
+    "uuid": "^8.3.1"
   }
 }

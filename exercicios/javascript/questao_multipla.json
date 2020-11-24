@@ -1,0 +1,20 @@
+{
+    "interpreter": 0.1,
+    "type": "MULTI",
+    "language": "Javascript",
+    "text": [
+        "Qual o comando correto para criar uma variável sem hoisting?"
+    ],
+    "alternatives": [
+        "var",
+        "let",
+        "const",
+        "def",
+        "#DEF"
+    ],
+    "acceptedAnswers": [
+        [
+            "let"
+        ]
+    ]
+}

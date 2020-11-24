@@ -1,0 +1,22 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "f60ed435-6760-4c93-a8af-6efe32da57fb",
+    "title": "Root",
+    "type": "object",
+    "required": [
+        "type"
+    ],
+    "properties": {
+        "type": {
+            "$id": "#root/type",
+            "title": "Type",
+            "type": "string",
+            "enum": [
+                "GAP",
+                "MULTI",
+                "VF"
+            ]
+        }
+    }
+}

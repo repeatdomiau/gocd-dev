@@ -1,0 +1,119 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "75ddc8a4-d6bf-40e2-b6a3-e327e9be6477",
+    "title": "Root",
+    "type": "object",
+    "required": [
+        "interpreter",
+        "language",
+        "type",
+        "text",
+        "alternatives",
+        "acceptedAnswers"
+    ],
+    "properties": {
+        "language": {
+            "$id": "#root/language",
+            "title": "Language",
+            "type": "string",
+            "default": null
+        },
+        "interpreter": {
+            "$id": "#root/interpreter",
+            "title": "Interpreter",
+            "type": "number"
+        },
+        "type": {
+            "$id": "#root/type",
+            "title": "Type",
+            "type": "string",
+            "const": "GAP"
+        },
+        "text": {
+            "$id": "#root/text",
+            "title": "Text",
+            "type": "array",
+            "items": {
+                "$id": "#root/text/items",
+                "title": "Items",
+                "type": "string"
+            }
+        },
+        "alternatives": {
+            "$id": "#root/alternatives",
+            "title": "Alternatives",
+            "type": "array",
+            "minItems": 2,
+            "uniqueItems": true,
+            "items": {
+                "$id": "#root/alternatives/items",
+                "title": "Items",
+                "type": "object",
+                "required": [
+                    "value"
+                ],
+                "properties": {
+                    "value": {
+                        "$id": "#root/alternatives/items/value",
+                        "title": "Value",
+                        "type": "string"
+                    },
+                    "hint": {
+                        "$id": "#root/alternatives/items/hint",
+                        "title": "Hint",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "feedbacks": {
+            "$id": "#root/feedbacks",
+            "title": "Feedbacks",
+            "type": "array",
+            "items": {
+                "$id": "#root/feedbacks/items",
+                "title": "Items",
+                "type": "object",
+                "required": [
+                    "field",
+                    "expected",
+                    "text"
+                ],
+                "properties": {
+                    "field": {
+                        "$id": "#root/feedbacks/items/field",
+                        "title": "Field",
+                        "type": "integer"
+                    },
+                    "expected": {
+                        "$id": "#root/feedbacks/items/expected",
+                        "title": "Expected",
+                        "type": "string"
+                    },
+                    "text": {
+                        "$id": "#root/feedbacks/items/text",
+                        "title": "Text",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "acceptedAnswers": {
+            "$id": "#root/acceptedAnswers",
+            "title": "Acceptedanswers",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$id": "#root/acceptedAnswers/items",
+                "title": "Items",
+                "type": "array",
+                "items": {
+                    "$id": "#root/acceptedAnswers/items/items",
+                    "title": "Items",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

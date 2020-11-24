@@ -1,0 +1,71 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "4b16313c-32f1-4406-9def-443b4fea18f5",
+    "title": "Root",
+    "type": "object",
+    "required": [
+        "language",
+        "interpreter",
+        "type",
+        "text",
+        "alternatives",
+        "acceptedAnswers"
+    ],
+    "properties": {
+        "language": {
+            "$id": "#root/language",
+            "title": "Language",
+            "type": "string",
+            "default": null
+        },
+        "interpreter": {
+            "$id": "#root/interpreter",
+            "title": "Interpreter",
+            "type": "number"
+        },
+        "type": {
+            "$id": "#root/type",
+            "title": "Type",
+            "type": "string",
+            "const": "MULTI"
+        },
+        "text": {
+            "$id": "#root/text",
+            "title": "Text",
+            "type": "array",
+            "items": {
+                "$id": "#root/text/items",
+                "title": "Items",
+                "type": "string"
+            }
+        },
+        "alternatives": {
+            "$id": "#root/alternatives",
+            "title": "Alternatives",
+            "type": "array",
+            "minItems": 5,
+            "items": {
+                "$id": "#root/alternatives/items",
+                "title": "Items",
+                "type": "string"
+            }
+        },
+        "acceptedAnswers": {
+            "$id": "#root/acceptedAnswers",
+            "title": "Acceptedanswers",
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "$id": "#root/acceptedAnswers/items",
+                "title": "Items",
+                "type": "array",
+                "items": {
+                    "$id": "#root/acceptedAnswers/items/items",
+                    "title": "Items",
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

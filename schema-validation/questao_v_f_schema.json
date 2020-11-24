@@ -1,0 +1,68 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "034f8983-81c4-40fe-942e-495ed8924053",
+    "title": "Root",
+    "type": "object",
+    "required": [
+        "language",
+        "interpreter",
+        "type",
+        "text",
+        "alternatives"
+    ],
+    "properties": {
+        "language": {
+            "$id": "#root/language",
+            "title": "Language",
+            "type": "string"
+        },
+        "interpreter": {
+            "$id": "#root/interpreter",
+            "title": "Interpreter",
+            "type": "number"
+        },
+        "type": {
+            "$id": "#root/type",
+            "title": "Type",
+            "type": "string",
+            "const": "VF"
+        },
+        "text": {
+            "$id": "#root/text",
+            "title": "Text",
+            "type": "array",
+            "items": {
+                "$id": "#root/text/items",
+                "title": "Items",
+                "type": "string"
+            }
+        },
+        "alternatives": {
+            "$id": "#root/alternatives",
+            "title": "Alternatives",
+            "type": "array",
+            "items": {
+                "$id": "#root/alternatives/items",
+                "title": "Items",
+                "type": "object",
+                "required": [
+                    "text",
+                    "correct"
+                ],
+                "properties": {
+                    "text": {
+                        "$id": "#root/alternatives/items/text",
+                        "title": "Text",
+                        "type": "string"
+                    },
+                    "correct": {
+                        "$id": "#root/alternatives/items/correct",
+                        "title": "Correct",
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}

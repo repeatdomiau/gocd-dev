@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const Ajv = require("ajv");
+const Ajv = require('ajv');
 
 const ajv = new Ajv({ allErrors: true });
 
@@ -27,8 +27,8 @@ for (let file of files) {
     const type = questionObj.type;
 
     const schemaPathForType = path.resolve(schemaPath, (
-        type == "GAP" ? 'questao_gaps_schema.json' :
-            type == "MULTI" ? 'questao_multipla_schema.json' :
+        type == 'GAP' ? 'questao_gaps_schema.json' :
+            type == 'MULTI' ? 'questao_multipla_schema.json' :
                 'questao_v_f_schema.json'
     )
     );
@@ -41,6 +41,7 @@ for (let file of files) {
         console.log(`${file} -> INVALID`);
         const error = validate.errors.map(e =>
             `Error: ${e.dataPath}: ${e.message} ${JSON.stringify(e.params)}`).join('\n');
+        errors.push(error);
     }
     else {
         console.log(`${file} -> OK`);

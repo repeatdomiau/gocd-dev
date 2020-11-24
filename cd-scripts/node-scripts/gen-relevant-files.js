@@ -2,14 +2,9 @@ const fs = require('fs');
 const path = require('path');
 
 const compose = (...fns) => (...args) => fns.reduce((res, fn) => [fn.call(null, ...res)], args)[0];
-const trace = x => { console.log(x); return x; }
 const toString = obj => obj.toString();
 const split = sep => text => text.split(sep);
 const splitLines = split('\n');
-const filter = fn => arr => arr.filter(fn);
-const byTruthy = x => x;
-const arrayToSet = arr => new Set(arr);
-const setToArray = set => [...set];
 
 const changesFile = process.argv[2];
 
@@ -27,12 +22,15 @@ const relevantFiles = [...relevantLines.reduce((res, line) => {
     return res;
 }, new Set())];
 
+const destination = '../relevant-files/';
+
+if (!fs.existsSync(destination)) fs.mkdirSync(destination);
+else {
+    fs.rmdirSync(destination, { recursive: true });
+    fs.mkdirSync(destination);
+}
+
 for (let file of relevantFiles) {
-
-    const destination = '../relevant-files/';
-
-    if (!fs.existsSync(destination)) fs.mkdirSync(destination);
-
     const data = file.split('/');
     const fileName = data[data.length - 1];
     fs.copyFileSync(path.resolve('../../', file), path.resolve(destination, fileName));

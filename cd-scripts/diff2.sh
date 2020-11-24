@@ -21,7 +21,7 @@ echo -e "obtaning changes...\n"
 truncate -s 0 ./temp/changes.txt
 
 while read -r line; do
-    echo "fetching "$line
+    #echo "fetching "$line
     echo "COMMIT "$line >> ./temp/changes.txt
     git diff-tree --no-commit-id --name-only --diff-filter=A -r $line | sed 's/^/ADDED /' >> ./temp/changes.txt
     git diff-tree --no-commit-id --name-only --diff-filter=M -r $line | sed 's/^/MODIFIED /'>> ./temp/changes.txt
